@@ -13,24 +13,11 @@
 </head>
 
 <body>  
-    <div id="hihi">
-        <table id="hi">
-            <tr>
-                <td>
-                    <p>Choose your elements' universe</p>
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-                    <button id="integers" onclick="init('ints')">Numbers 0 - 100</button>
-                </td>
-                <td>
-                    <button id="verbs" onclick="init('verbs')">English verbs</button>
-                </td>
-            </tr>
-        </table>
-    </div>
+    <p id="choose">Choose your elements' type</p>
+    <div id="integers" class="button ice green" onclick="init('ints')">Numbers 0 - 100</div>
+    <div id="verbs" class="button ice green" onclick="init('verbs')">English verbs</div>
+    <div class="button ice" id="game_rules" onclick="window.location.href='./explain/rules.html'">Game rules</div>
+    <div class="button ice" id="explain_bst" onclick="window.location.href='./explain/explain_bst.html'">BST... what?</div>
 </body> 
 <script src="app.js"></script>
 </html>

@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="cs">
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Trinity">
+    <meta name="description" content="Gamyfing learning experience">
+    <meta name="keywords" contents="virtual, textbook, map, knowledge, infinite, generator, exercises">
+    <title> Play to learn </title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../fonts.css">
+</head>
+
+<body>  
+    <div id="what_and_why" class="button ice">what & why</div>
+    <div id="binary" class="button ice">binary</div>
+    <div id="search" class="button ice">search</div>
+    <div id="tree" class="button ice">tree</div>
+    <div id="rules1" class="levitate_in_space" style="height: 500px;"></div>
+    <div id="understood" class="button ice" onclick="window.location.href = '../BST.html'">Understood</div>
+</body> 
+<script>
+    var what_and_why = `<p style="width: 90%; position:relative; left:5%;">Binary search tree is a data structure programmers use inside computers so that computers can process information faster.</p>
+        <p style="width: 90%; position:relative; left:5%; text-align: center;">Fun fact</p>
+        <p style="width: 90%; position:relative; left:5%; text-align: left;">Imagine you have dictionary with million words. If it is stored using BST, you only need to look at 20 words to find it! 🚀🤯🚀🤯</p>`;
+    var div = document.getElementById("rules1");
+    div.innerHTML = what_and_why;
+
+    var binary = `
+        <p style="width: 90%; position:relative; left:5%;">Each element, in our case cards, points to two children. In another words each card has a line to two other cards that are below.</p>
+        <p style="width: 90%; position:relative; left:5%; text-align: center;" ><img src="binary.jpg"></p>
+    `;
+    var search = `
+        <p style="width: 90%; position:relative; left:5%;">The reason why it is usefull for searching is because each left child is guaranteed to be smaller than its parent card and each right child is guaranteed to be greater than its parent.</p>
+        <p style="width: 90%; position:relative; left:5%;">If you look at the root and there is '56'. If you are trying to find '78' you now know, you don't need to look at all the cards to the left. </p>
+        <p style="width: 90%; position:relative; left:5%;">In a sense it is as if by looking at the first card you have seen all the cards at the left side too. </p>
+    `;
+    var tree = `
+        <p style="width: 90%; position:relative; left:5%; text-align: center;">Consider how water flows in trees from the root to the leaves.</p>
+        <p style="width: 90%; position:relative; left:5%; text-align: center;">The flow of search algorithm in binary search tree is very much the same.</p>
+        <img src="tree.png" style="width:500px; position: absolute; left: 470px;">
+    `;
+    document.getElementById("what_and_why").addEventListener("mousedown", ev => { div.innerHTML = what_and_why; set_tree(false); s});
+    document.getElementById("binary").addEventListener("mousedown", ev => { div.innerHTML = binary; set_tree(false); });
+    document.getElementById("search").addEventListener("mousedown", ev => { div.innerHTML = search; set_tree(false); });
+    document.getElementById("tree").addEventListener("mousedown", ev => { div.innerHTML = tree; set_tree(true);});    
+    document.addEventListener("mousedown", ev => { console.log(`mouse clicked at x (left): ${ev.x}, y (top): ${ev.y}`);});
+    function set_tree(set) {
+        let el = document.getElementById("understood");
+        if(set) {
+            el.style.top = "860px";
+        } else {
+            el.style.top = "780px"; 
+        }
+    }
+</script>
+</html>
+

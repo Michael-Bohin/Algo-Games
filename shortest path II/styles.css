@@ -1,0 +1,532 @@
+body {
+    overflow: hidden;
+    font-family: 'Itim';
+    background-image: url("background3.png");
+    background-size: cover;
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+}
+
+*, *::after, *::before {
+	-webkit-user-select: none;
+	-webkit-user-drag: none;
+	-webkit-app-region: no-drag;
+}
+
+#nazev_tema {
+    position: absolute;
+    top: -30px;
+    color: azure;
+    left: 531px;
+    font-family: 'Caveat Brush';
+    font-size: 70px;
+}
+
+#otazka {
+    position: absolute;
+    top: 200px;
+    left: 750px;
+    z-index: 5;
+    color: azure;
+    font-family: 'Caveat Brush';
+    font-size: 40px;
+}
+
+#letsplay {
+    position: absolute;
+    top: 730px;
+    left: 825px;
+    z-index: 5;
+}
+
+#table {
+    position: absolute;
+    top: 155px;
+    left: 183px;
+    width: 1554px;
+    height: 680px;
+    border-radius: 35px;
+    background-color: #1eb2a6;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(82, 222, 151, 0.6)), to(rgba(82, 222, 151, 0.9)));
+    background-image: linear-gradient(to bottom,  rgba(82, 222, 151, 0.6), rgba(82, 222, 151, 0.9));
+    box-shadow: 0 0 70px rgba(82, 222, 151, 0.1), 0 5px 20px rgba(98, 255, 181, 0.6), inset 0 1px #ffeca8, inset 0 -1px #ffeca8;
+}
+
+.ml3 {
+    position: absolute;
+    color: azure;
+    font-family: 'Caveat Brush';
+    font-size: 34px;
+    z-index: 5;
+}
+
+.r1 {
+    top: 180px;
+    left: 550px;
+}
+
+.r2 {
+    top: 230px;
+    left: 362px;
+}
+
+.r3 {
+    top: 280px;
+    left: 583px;
+}
+
+.r4 {
+    top: 330px;
+    left: 695px;
+}
+
+#europe_mini {
+    position: absolute;
+    top: 447px;
+    left: 750px;
+    z-index: 5;
+    width: 400px;
+}
+
+
+#europe_sat {
+    position: absolute;
+    top: 83px;
+    left: 65px;
+    border-radius: 5px;
+    z-index: 0;
+    width: 1274px;
+}
+
+#canvas{
+    position: absolute;
+    top: 83px;
+    left: 65px;
+    width: 1274px;
+    height: 772px;
+    z-index: 1;
+}
+
+#canvas_hover{
+    position: absolute;
+    top: 83px;
+    left: 65px;
+    width: 1274px;
+    height: 772px;
+    z-index: 5;
+}
+
+#herni_tabule {
+    position: absolute;
+    top: 48px;
+    left: 30px;
+    width: 1344px;
+    height: 842px;
+    border-radius: 25px;
+    z-index: -1;
+    background-color: #3282b7;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(14, 76, 117, 0.9)), to(rgba(28, 113, 165, 0.6)));
+    background-image: linear-gradient(to bottom, rgba(14, 76, 117, 0.9), rgba(28, 113, 165, 0.6));
+    box-shadow: 0 0 70px rgba(48, 138, 255, 0.1), 0 5px 20px rgba(65, 154, 255, 0.6), inset 0 1px #ffeca8, inset 0 -1px #ffeca8;
+}
+
+#answer_tab { 
+    position: absolute;
+    top: 48px;
+    left: 1404px;
+    width: 486px;
+    height: 541px;
+    border-radius: 25px;
+    background-color: #3282b7;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(14, 76, 117, 0.9)), to(rgba(28, 113, 165, 0.6)));
+    background-image: linear-gradient(to bottom, rgba(14, 76, 117, 0.9), rgba(28, 113, 165, 0.6));
+    box-shadow: 0 0 70px rgba(48, 138, 255, 0.1), 0 5px 20px rgba(65, 154, 255, 0.6), inset 0 1px #ffeca8, inset 0 -1px #ffeca8;
+}
+
+#toggle_text {
+    position: absolute;
+    top: 33px;
+    left: 1620px;
+    z-index: 2;
+    color: azure;
+    font-family: "Caveat Brush";
+    font-size: 36px;
+}
+
+#btn1 {
+    position: absolute;
+    top:140px;
+    left: 1424px;
+}
+
+#btn2 {
+    position: absolute;
+    top:140px;
+    left: 1658px;
+}
+
+#btn3 {
+    position: absolute;
+    top:500px;
+    left: 1536px;
+}
+
+#answer_text {
+    position: absolute;
+    top: 205px;
+    left: 1446px;
+    color: azure;
+    font-family: "Caveat Brush";
+    font-size:29px;
+}
+
+#answer_text2 {
+    position: absolute;
+    top: 340px;
+    left: 1543px;
+    color: azure;
+    font-family: "Caveat Brush";
+    font-size:29px;
+}
+
+#answer_user1 {
+    position: absolute;
+    top: 272px;
+    left: 1446px;
+    color: azure;
+    font-family: "Caveat Brush";
+    font-size:22px;
+}
+
+#answer_user2 {
+    position: absolute;
+    top: 403px;
+    left: 1626px;
+    color: azure;
+    font-family: "Caveat Brush";
+    font-size:29px;
+}
+
+#tree {
+    position: absolute;
+    top: 83px;
+    left: 65px;
+    width: 800px;
+    z-index: -2;
+}
+
+.tree_city {
+    color: azure;
+    height: 30px;
+    width: 120px;
+    background-color: rgba(0,0,0,0.3);
+    text-align: center;
+    font-family: 'Caveat Brush';
+    font-size: 20px;
+    line-height: 30px;
+    border-radius: 5px;
+}
+
+#tree1 { position: absolute; top: 339px; left: 111px; z-index: -2; }
+#tree2 { position: absolute; top: 148px; left: 387px; z-index: -2; }
+#tree3 { position: absolute; top: 339px; left: 387px; z-index: -2; }
+#tree4 { position: absolute; top: 530px; left: 387px; z-index: -2; }
+#tree5 { position: absolute; top: 101px; left: 642px; z-index: -2; }
+#tree6 { position: absolute; top: 196px; left: 642px; z-index: -2; }
+#tree7 { position: absolute; top: 291px; left: 642px; z-index: -2; }
+#tree8 { position: absolute; top: 387px; left: 642px; z-index: -2; }
+#tree9 { position: absolute; top: 482px; left: 642px; z-index: -2; }
+#tree10 { position: absolute; top: 577px; left: 642px; z-index: -2; }
+#tree11 { position: absolute; top: 101px; left:	897px; z-index: -2; }
+#tree12 { position: absolute; top: 196px; left:	897px; z-index: -2; }
+#tree13 { position: absolute; top: 291px; left:	897px; z-index: -2; }
+#tree14 { position: absolute; top: 387px; left:	897px; z-index: -2; }
+#tree15 { position: absolute; top: 482px; left:	897px; z-index: -2; }
+#tree16 { position: absolute; top: 577px; left:	897px; z-index: -2; }
+#tree17 { position: absolute; top: 339px; left:	1152px; z-index: -2; }
+
+
+.tree_memory {
+    color: rgba(0, 255, 0, 1);
+    background-color: rgba(0, 0, 0, 1);
+    width:40px;
+    height: 40px;
+    font-family: "Caveat Brush";
+    font-size: 26px;
+    line-height: 40px;
+    text-align:center;
+    border-radius: 40px;
+    border: solid;
+    border-color: rgba(0, 255, 0, 1);
+    border-width: 2px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
+/* !!!!!!!!!!!!!!!!  absolute position coords get rewriten by js relative to tree IDs, these are here just for the elements to be beneath before they get corrected by js */
+#tree_memory1-2 { position: absolute; top: 439px; left: 111px; z-index: -2; }
+#tree_memory1-3 { position: absolute; top: 182px; left: 387px; z-index: -2; }
+#tree_memory1-4 { position: absolute; top: 439px; left: 387px; z-index: -2; }
+#tree_memory2-5 { position: absolute; top: 696px; left: 387px; z-index: -2; }
+#tree_memory2-6 { position: absolute; top: 117px; left: 642px; z-index: -2; }
+#tree_memory3-7 { position: absolute; top: 246px; left: 642px; z-index: -2; }
+#tree_memory3-8 { position: absolute; top: 375px; left: 642px; z-index: -2; }
+#tree_memory4-9 { position: absolute; top: 503px; left: 642px; z-index: -2; }
+#tree_memory4-10 { position: absolute; top: 632px; left: 642px; z-index: -2; }
+#tree_memory5-11 { position: absolute; top: 761px; left: 642px; z-index: -2; }
+#tree_memory6-12 { position: absolute; top: 117px; left:	897px; z-index: -2; }
+#tree_memory7-13 { position: absolute; top: 246px; left:	897px; z-index: -2; }
+#tree_memory8-14 { position: absolute; top: 375px; left:	897px; z-index: -2; }
+#tree_memory9-15 { position: absolute; top: 503px; left:	897px; z-index: -2; }
+#tree_memory10-16 { position: absolute; top: 632px; left:	897px; z-index: -2; }
+#tree_memory11-17 { position: absolute; top: 761px; left:	897px; z-index: -2; }
+#tree_memory12-17 { position: absolute; top: 439px; left:	1152px; z-index: -2; }
+#tree_memory13-17 { position: absolute; top: 439px; left:	1152px; z-index: -2; }
+#tree_memory14-17 { position: absolute; top: 439px; left:	1152px; z-index: -2; }
+#tree_memory15-17 { position: absolute; top: 439px; left:	1152px; z-index: -2; }
+#tree_memory16-17 { position: absolute; top: 439px; left:	1152px; z-index: -2; }
+
+.sum_paths {
+    color: azure;
+    font-family: 'Caveat Brush';
+    font-size: 24px;
+    width: 700px;
+    text-align: justify;
+    text-align-last: justify;
+}
+
+#shared_text { 
+    color: azure;
+    font-family: 'Caveat Brush';
+    font-size: 24px;
+    position: absolute; 
+    top: 705px; 
+    left: 148px; 
+    z-index: -2; 
+}
+
+#path1 {position: absolute; top: 630px; left: 328px; z-index: -2; }
+#path2 {position: absolute; top: 660px; left: 328px; z-index: -2; }
+#path3 {position: absolute; top: 690px; left: 328px; z-index: -2; }
+#path4 {position: absolute; top: 720px; left: 328px; z-index: -2; }
+#path5 {position: absolute; top: 750px; left: 328px; z-index: -2; }
+#path6 {position: absolute; top: 780px; left: 328px; z-index: -2; }
+
+.sum_input {
+    text-align:center;
+    color: rgba(0, 255, 0, 1);
+    background-color: rgba(0, 0, 0, 1);
+    border: none;
+    height: 22px;
+    line-height: 22px;
+    border-radius: 3px;
+
+}
+
+#set_ans { 
+    color: azure;
+    font-family: 'Caveat Brush';
+    font-size: 24px;
+    position: absolute; 
+    top: 600px;
+    left: 1046px; 
+    z-index: -2; 
+}
+
+.answer_checkbox {
+    color: rgba(0, 255, 0, 1);
+    background-color: rgba(0, 0, 0, 1);
+    height: 25px;
+    width: 25px;
+}
+
+#answer1 { position: absolute; left: 1078px; top: 660px; z-index: -2; }
+#answer2 { position: absolute; left: 1078px; top: 690px; z-index: -2; }
+#answer3 { position: absolute; left: 1078px; top: 720px; z-index: -2; }
+#answer4 { position: absolute; left: 1078px; top: 750px; z-index: -2; }
+#answer5 { position: absolute; left: 1078px; top: 780px; z-index: -2; }
+#answer6 { position: absolute; left: 1078px; top: 810px; z-index: -2; }
+
+/* >>>>>>>>>>>>>>>>>>>> evaluate 'page' CSS <<<<<<<<<<<<<<<<<<<<<<*/ 
+
+.choose {
+    position: absolute;
+    top: 30vh;
+    left: 42vw;
+    font-family: 'Caveat Brush';
+    font-size: 48px;
+    color: white;
+    
+}
+
+#text1 {
+    position: absolute;
+    top: -2vh;
+    left: 45vw;
+    font-family: 'Caveat Brush';
+    font-size: 48px;
+    color: white; 
+}
+
+#gg {
+  position: absolute;
+  top: -2vh;
+  left: 45vw;
+  font-family: 'Caveat Brush';
+  font-size: 48px;
+  color: white; 
+}
+
+#table_choose {
+    position: relative;
+    left: 19vw;
+    background-color: #7fdbda;
+    border-radius: 20px;
+    border-width: 3px;
+    border-color: teal;
+
+}
+
+.area {
+    position: absolute;
+    top: 1.8vh;
+    left: 43vw;
+    font-family: 'Caveat Brush';
+    font-size: 42px;
+    color: white;
+}
+
+td .continents {
+    opacity: 1;
+}
+
+.icon {
+    opacity: 1; 
+    border-radius: 50px;
+}
+
+.icon:hover {
+     background-color: #f4f4f4;
+     background-position: center;
+}
+
+#table_eval_result {
+    
+    position: absolute;
+    color: azure;
+    font-family: "Caveat Brush";
+    font-size: 26px;
+    top: 48px;
+    left: 485px;
+    width: 950px;
+    height: 370px;
+    border-radius: 25px;
+    z-index: 1;
+}
+
+#table_eval_result_bg {
+    position: absolute;
+    background-color: #3282b7;
+    top: 48px;
+    left: 485px;
+    width: 950px;
+    height: 457px;
+    border-radius: 25px;
+    z-index: -1;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(14, 76, 117, 0.9)), to(rgba(28, 113, 165, 0.6)));
+    background-image: linear-gradient(to bottom, rgba(14, 76, 117, 0.9), rgba(28, 113, 165, 0.6));
+    box-shadow: 0 0 70px rgba(48, 138, 255, 0.1), 0 5px 20px rgba(65, 154, 255, 0.6), inset 0 1px #ffeca8, inset 0 -1px #ffeca8;
+}
+
+.btn {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 28px;
+    border-radius: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.btn:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+#return {
+    position: absolute;
+    top: 87px;
+    left: 180px;
+}
+
+#play_again {
+    position: absolute;
+    top: 87px;
+    left: 1500px;
+}
+/* width: 835px;*/ 
+#motivate {
+    width: 80%;
+    position: relative;
+    left: 10%;
+    text-align: left;
+    text-indent: 50px;
+}
+
+#highlight_users_path {
+    position: absolute;
+    left: 526px;
+    top: 426px;
+    z-index: -0.5;
+    width: 875px;
+    height: 45px;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 255, 117, 0.9)), to(rgba(0, 255, 0, 0.6)));
+    background-image: linear-gradient(to bottom, rgba(0, 255, 117, 0.9), rgba(0, 255, 0, 0.6));
+    box-shadow: 0 0 70px rgba(48, 138, 255, 0.1), 0 5px 20px rgba(65, 154, 255, 0.6), inset 0 1px #ffeca8, inset 0 -1px #ffeca8;
+    border-radius: 5px;
+}
+
+#game_rules {
+    position: absolute;
+    top:  10px;
+    left: 10px;
+    width: 200px;
+}
+
+#rules1 {
+    position: absolute;
+    left: 225px; 
+    width: 1470px;
+    top: 150px;
+}
+
+#understood {
+    position: absolute;
+    left: 827px;
+    top: 780px;
+}
+
+.levitate_in_space {
+    color:azure;
+    background-color: rgba(0,0,0,0.75);
+    border-radius: 10px;
+    font-family: 'Caveat Brush';
+    font-size: 42px;
+    text-align: left;
+    line-height: 36px;
+    text-indent: 60px;
+}

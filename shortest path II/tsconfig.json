@@ -1,0 +1,4 @@
+{
+    "compilerOptions": { "strict" : true, "strictNullChecks": false, "target": "es2020" }
+    ,"files": ["app.ts"]
+}
