@@ -502,6 +502,13 @@ td .continents {
 
 #game_rules {
     position: absolute;
+    top:  80px;
+    left: 10px;
+    width: 200px;
+}
+
+#fun_fact {
+    position: absolute;
     top:  10px;
     left: 10px;
     width: 200px;

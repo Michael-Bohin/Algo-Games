@@ -1,14 +1,4 @@
-/*class TreeNode<T> {
-    public val: T;
-    public left: TreeNode<T>;
-    public right: TreeNode<T>;
-    constructor(val: T) {
-        this.val = val;
-    }
-}*/
-
-class BST<T> {
-    //root: TreeNode<T>;                         
+class BST<T> {                       
     int_permutation: Array<number> = new Array(100);
     string_permutation: Array<string> = new Array(100);
     public order: number[] = [ -1, // dummy
@@ -73,39 +63,6 @@ class BST<T> {
             }
         }
     }
-    /*public insert(value: T): void {
-        let temp: TreeNode<T> = this.root;
-        let previous: TreeNode<T> = null;
-        while(temp != null) {
-            previous = temp;
-            if(temp.val > value) {
-                temp = temp.left;
-            } else {
-                temp = temp.right;
-            }
-        }
-        if(previous == null) {
-            this.root = new TreeNode(value);
-        } else {
-            if(previous.val > value)
-                previous.left = new TreeNode(value);
-            else
-                previous.right = new TreeNode(value);
-        }
-    }
-    public contains(value: T): boolean {
-        let temp: TreeNode<T> = this.root;
-        while(temp != null) {
-            if(temp.val > value) {
-                temp = temp.left;
-            } else if(temp.val < value) {
-                temp = temp.right;
-            } else {
-                return true;
-            }
-        }
-        return false;
-    }*/
 
     randint(min: number, max: number): number { // inclusive type of both min and max
         return Math.floor(Math.random() * (max - min + 1) ) + min;
@@ -143,11 +100,9 @@ class BST<T> {
             else 
                 this.theory_correct_search_order[i] = this.go_left(crossroads < 0, i);
         } 
-        console.log(this.theory_correct_search_order); // neat 
-        /* 2.>>> */ this.player_search_order = this.evaluate_order(answer_order);
-        /* 3.>>> */ this.player_contain_answer = (answer_yes == this.q_contains);
-        console.log(`order: ${this.player_search_order}`);
-        console.log(`btn: ${this.player_contain_answer}`);
+        /* 2.>>> */ this.player_search_order = this.evaluate_order(answer_order);  
+        /* 3.>>> */ this.player_contain_answer = (answer_yes == this.q_contains);  
+        console.log(`${this.theory_correct_search_order}, order: ${this.player_search_order}, btn: ${this.player_contain_answer}`);
     }
 
     evaluate_order(answer_order: number[]): boolean {
@@ -193,11 +148,18 @@ class view_html {
     cards_face_up: boolean[] = new Array(32).fill(false);               // including dummy 
 
     constructor(bst: BST<unknown>) {
-        /*console.log("hello world");
-        console.log(document.body.clientWidth);
-        console.log(document.body.clientHeight);
-        console.log(window.innerWidth);
-        console.log(window.innerHeight);*/
+        function toggleZoomScreen(scale_percent: number) {
+            document.body.style.zoom = `${scale_percent}%`;
+        }
+        let browser_width: number = window.innerWidth;
+        let percentage_change: number = (browser_width / 1920) * 100;
+        console.log(browser_width);
+        console.log(window.innerHeight);
+        console.log(percentage_change);
+        toggleZoomScreen(percentage_change);
+        console.log(`width after change: ${window.innerWidth}`);
+        console.log(`height after change: ${window.innerHeight}`);
+
         this.bst = bst; 
         document.querySelector('body').innerHTML = this.page_game + `<div id='answer_yes' class="button ice green">${bst.question} is in the tree!</div><div id='answer_no' class="button ice green">${bst.question} is not in the tree!</div>`;
  
@@ -391,11 +353,12 @@ class view_html {
         692, 692, 692, 692, 692, 692, 692, 692, 692, 692, 692, 692, 692, 692, 692, 692   // 5th
     ];
 }
-
-var bst;
-var view;
-
-function init(game_type: string) {
-    bst = new BST(game_type == 'ints');
-    view = new view_html(bst);
+/* ------------- run: ------------ */
+function init(game_type: boolean) {
+    let bst: BST<unknown> = new BST(game_type);
+    let view: view_html = new view_html(bst);
 }
+
+document.getElementById("integers").addEventListener("mousedown", ev => { init(true); });
+document.getElementById("verbs").addEventListener("mousedown", ev => { init(false); });
+

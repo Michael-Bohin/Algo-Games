@@ -42,10 +42,7 @@ class Game {
     public answer_path_in: number;          // which path did the player point at 
     public answer_sum_in: number;           // what did the player calculate
     public players_path_order: number;      // position of players path in sorted list 
-
-    ///
-    public strange: string[][];
-    ///
+    public game_over: boolean = false;      // in order to prevent redraw firing eventlisteners at game summary stage meant for playing stage
 
     constructor() {
         let choice = this.randint(0, 13);
@@ -159,6 +156,7 @@ class Game {
                     this.answer_path = true;
             }
         }
+        this.game_over = true;
         return ret;
     }
 }
@@ -171,14 +169,15 @@ class View {
 
     constructor(game: Game) {
         this.game = game;
-        document.getElementById("letsplay").addEventListener("mousedown", _ => this.start_playing(game));
         document.getElementById('text2').innerHTML = `You have now been for a week in ${game.start}. And decided that your next destination will be ${game.goal}.`;
         document.getElementById('text3').innerHTML = `Sadly, there is no direct flight from ${game.start} to ${game.goal}. 😞😲`;
+        document.querySelectorAll(".ml3").forEach(function(userItem) {userItem.innerHTML = userItem.textContent.replace(/\S/g, "<span class='letter'>$&</span>");});
+        anime.timeline({loop: false}).add({targets: '.ml3 .letter', opacity: [0,1], easing: "easeInOutQuad", duration: 600, delay: (el:HTMLElement, i:number) => 30 * (i+1)});
+        document.getElementById("letsplay").addEventListener("mousedown", _ => this.start_playing(game));
+        //document.addEventListener("mousedown", ev => { console.log(`Mouse clicked at ${ev.x}, ${ev.y}`);});
     }
 
     start_playing(game: Game): void {
-        /*
-        var gettingZoom = browser.tabs.getZoom();*/
         var visualViewport = window.visualViewport;
         console.log(window.visualViewport);
         var scale = visualViewport.scale;
@@ -330,6 +329,8 @@ class View {
     }
 
     update_answer_sum(): void {
+        if(game.game_over)
+            return;
         for(let i: number = 1; i < 7; ++i) {
             let el: HTMLInputElement = <HTMLInputElement>(document.getElementById(`answer${i}`));
             if(el.checked) {
@@ -341,13 +342,11 @@ class View {
     }
 
     update_answer_path(i: number): void {
-        console.log("updating path");
         for(let j: number = 1; j < 7; ++j)
             if(i != j) {
                 let el: HTMLInputElement = <HTMLInputElement> document.getElementById(`answer${j}`);
                 el.checked = false;
             }
-          
         let a = game.flight_cities; let b = game.paths; 
         document.getElementById("answer_user1").innerHTML = `${a[b[i][0]]} &#10132 ${a[b[i][1]]} &#10132; ${a[b[i][2]]} &#10132; ${a[b[i][3]]} &#10132; ${a[b[i][4]]}`;
         
@@ -439,6 +438,20 @@ class View {
     }
 
     redraw() {
+        if(game.game_over) 
+            return;
+        function toggleZoomScreen(scale_percent: number) {
+            document.body.style.zoom = `${scale_percent}%`;
+        }
+        let browser_width: number = window.innerWidth;
+        let percentage_change: number = (browser_width / 1920) * 100;
+        console.log(browser_width);
+        console.log(window.innerHeight);
+        console.log(percentage_change);
+        toggleZoomScreen(percentage_change);
+        console.log(`width after change: ${window.innerWidth}`);
+        console.log(`height after change: ${window.innerHeight}`);
+
         let wtf = document.querySelectorAll("canvas");
         let canvas_h = wtf[1]; let canvas = wtf[0];
         canvas_h.width = canvas.width = 1274; canvas_h.height = canvas.height = 772;
@@ -649,7 +662,6 @@ class View {
         }
     }
 
-
     evaluate_answer(path: number, sum: number) { 
         document.body.innerHTML = `
                 <div class="button ice" id="return">Return to portal</div> 
@@ -776,39 +788,19 @@ class View {
         let audio = new Audio('./loss.mp3');
         let el:HTMLElement = document.getElementById("motivate");
         let emojis: string[] = ["🔥", "👍", "👌", "👏", "🤗", "💪", "🎉", "✌", "✨", "🙌"];
-        let a: string = emojis[game.randint(0,9)];
-        let b: string = emojis[game.randint(0,9)];
-        let c: string = emojis[game.randint(0,9)];
-        let d: string = emojis[game.randint(0,9)];
+        let a: string[] = [emojis[game.randint(0,9)], emojis[game.randint(0,9)], emojis[game.randint(0,9)], emojis[game.randint(0,9)]];
         if(game.answer_path && game.answer_sum) {
             audio = new Audio('./victory.mp3');
-            el.innerHTML = ` Congratulations! ${a}${b}${c}${d} You have answered both the path and its sum correctly. `;
+            el.innerHTML = ` Congratulations! ${a[0]}${a[1]}${a[2]}${a[3]} You have answered both the path and its sum correctly. `;
         } else if(game.answer_path && !game.answer_sum) {
-            el.innerHTML = `You have chosen the cheapest path correctly ${a}, but didn't get the price right. It's not ${game.answer_sum_in}. The sum is ${document.getElementById(`res${row}`).innerHTML}.`;
+            el.innerHTML = `You have chosen the cheapest path correctly ${a[2]}, but didn't get the price right. It's not ${game.answer_sum_in}. The sum is ${document.getElementById(`res${row}`).innerHTML}.`;
         } else if(!game.answer_path && game.answer_sum) {
-            el.innerHTML = `You have calculated the price of the path you chose well ${a}, but there is a cheaper path!`;
+            el.innerHTML = `You have calculated the price of the path you chose well ${a[1]}, but there is a cheaper path!`;
         }
         audio.play();
     }
 }
 
 /* ------------- run: ------------ */
-document.addEventListener("mousedown", ev => { // for coding reasons to see coordinates easier 
-    console.log(`Mouse clicked at ${ev.x}, ${ev.y}`);
-});
-
 let game: Game = new Game();
 let view: View = new View(game);
-
-var els = document.querySelectorAll(".ml3");
-els.forEach(function(userItem) {
-    userItem.innerHTML = userItem.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
-});
-
-anime.timeline({loop: false}).add({
-    targets: '.ml3 .letter',
-    opacity: [0,1],
-    easing: "easeInOutQuad",
-    duration: 600,
-    delay: (el:HTMLElement, i:number) => 30 * (i+1)
-});

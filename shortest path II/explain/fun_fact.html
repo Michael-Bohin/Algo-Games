@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="cs">
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Trinity">
+    <meta name="description" content="Gamyfing learning experience">
+    <meta name="keywords" contents="virtual, textbook, map, knowledge, infinite, generator, exercises">
+    <title> Play to learn </title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../styles2.css">
+    <link rel="stylesheet" href="../fonts.css">
+</head>
+
+<body>  
+    <div id="rules1" class="levitate_in_space" style="height: 700px; top: 50px; font-family: Arial, Helvetica, sans-serif; font-size: 22px;"></div>
+    <div id="reveal_answer" class="button ice green" style="position: absolute; top: 660px; left: 827px;">Reveal answer</div>
+    <div id="understood" class="button ice" onclick="window.location.href = '../game.html'">Understood</div>
+</body> 
+<script>
+    var observe = `
+        <p style="width: 90%; position:relative; left:5%; text-align:center;">How many different combinations are there for this exercises?</p>
+        <p style="width: 90%; position:relative; left:5%; text-align:center;">Hint:</p>
+        <p style="width: 90%; position:relative; left:5%;">☛  There are 30 cities in total</p>
+        <p style="width: 90%; position:relative; left:5%;">☛  The program first randomly chooses from 14 predefined pairs of possible start and destination cities</p>
+        <p style="width: 90%; position:relative; left:5%;">☛  Than it flips coin which is going to be start and which destination </p>
+        <p style="width: 90%; position:relative; left:5%;">☛  After that it chooses 13 cities which are not going to be involved out of 28 remaining cities </p>
+        <p style="width: 90%; position:relative; left:5%;">☛  For the remaining 15 cities it randomly chooses their position in flights</p>
+    `;
+
+    var answer = `
+    <p style="width: 90%; position:relative; left:5%; text-align:center;">How many different combinations are there for this exercises?</p>
+        <p style="width: 90%; position:relative; left:5%; text-align:center;">Hint:</p>
+        <p style="width: 90%; position:relative; left:5%;">☛  There are 30 cities in total</p>
+        <p style="width: 90%; position:relative; left:5%;">☛  The program first randomly chooses from 14 predefined pairs of possible start and destination cities <span style="color: rgb(0,255,0);"> ⇒ * 14 </span></p>
+        <p style="width: 90%; position:relative; left:5%;">☛  Than it flips coin which is going to be start and which destination <span style="color: rgb(0,255,0);"> ⇒ * 2 </span></p>
+        <p style="width: 90%; position:relative; left:5%;">☛  After that it chooses 13 cities which are not going to be involved out of 28 remaining cities <span style="color: rgb(0,255,0);"> ⇒ * combination of 30 choose 13</span></p>
+        <p style="width: 90%; position:relative; left:5%;">☛  For the remaining 15 cities it randomly chooses their position in flights <span style="color: rgb(0,255,0);"> ⇒ factorial:  * 15!</span></p>
+        <p style="width: 90%; position:relative; left:5%; color: rgb(0,255,0);">14 * 2 * (30 choose 13) * 15! = 28 * 119 759 850 * 1 307 674 368 000 = 4 384 992 812 494 694 400 000 = 4.4 * 10^21</p>
+        <p style="width: 90%; position:relative; left:5%; color: rgb(0,255,0);">Yep, you read that right. That is 4.4 trilliardth possible combinations. Aproximatelly 548 124 101 561 times more than there are poeople alive today. Wonder what is the chance you get the same combination twice in your lifetime? About 0.</p>
+    `;
+
+    revealed = false;
+    var div = document.getElementById("rules1");
+    div.innerHTML = observe;
+
+    document.getElementById("reveal_answer").addEventListener("mousedown", ev => { 
+        if(!revealed)
+            div.innerHTML = answer; 
+    });
+    document.addEventListener("mousedown", ev => { console.log(`mouse clicked at x (left): ${ev.x}, y (top): ${ev.y}`);});
+</script>
+</html>
+
