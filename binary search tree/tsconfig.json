@@ -1,3 +1,4 @@
 {
-    "compilerOptions": { "strict" : true, "strictNullChecks": false, "target": "es2020" }
+    "compilerOptions": { "strict" : true, "strictNullChecks": false, "target": "es2020" }, 
+    "files": ["game.ts", "view.ts"]
 }
