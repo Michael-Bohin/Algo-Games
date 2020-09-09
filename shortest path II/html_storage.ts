@@ -3,17 +3,17 @@ var page_game: string = `
     <canvas id="canvas"></canvas>
     <div id="herni_tabule"></div>
     <div id="answer_tab"></div>
-    <p id="toggle_text">View</p>
-    <div id="btn1" class="button ice toggle">Satelite map</div> 
-    <div id="btn2" class="button ice toggle">Flight graph</div> 
-    <p id="answer_text">The cheapest combination of flights is:</p> 
-    <p id="answer_text2">with the total cost:</p> 
+    <p id="answer_text">The combination through cities:</p> 
+    <p id="answer_text2">has total cost:</p> 
     <p id="answer_user1"></p>
-    <p id="answer_user2"></p>
+    <input type="number" id="answer_user2" value="" min="0" max='1000' placeholder="?" autofocus/>
+    <p id="answer_user3"></p>
     <div id="btn3" class="button ice toggle">Check answer</div> 
     <div id="map_elements"></div>  
     <div id="tree_elements"></div>
 `;
+
+// 🙂 🤨 😬 🙄 😒 🤯 🙈
 
 var page_summary: string = `
 <div class="button ice" id="return">Return to portal</div> 

@@ -629,3 +629,35 @@ box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
     top: 50px;
     left: 1282px;
 }
+
+#level2 {
+    position: absolute;
+    top: 810px;
+    left: 820px;
+
+}
+
+#addi {
+    position: absolute;
+    top: 50vh;
+    left: 28vw;
+}
+
+
+#subs {
+    position: absolute;
+    top: 50vh;
+    left: 58vw;
+}
+
+#mult {
+    position: absolute;
+    top: 50vh;
+    left: 50vw;
+}
+
+#divi {
+    position: absolute;
+    top: 50vh;
+    left: 65vw;
+}

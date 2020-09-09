@@ -134,10 +134,10 @@ body {
 
 #answer_tab { 
     position: absolute;
-    top: 48px;
+    top: 198px;
     left: 1404px;
     width: 486px;
-    height: 541px;
+    height: 391px;
     border-radius: 25px;
     background-color: #3282b7;
     background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(14, 76, 117, 0.9)), to(rgba(28, 113, 165, 0.6)));
@@ -173,6 +173,14 @@ body {
     left: 1536px;
 }
 
+#btn3_fail {
+    position: absolute;
+    top:500px;
+    left: 1536px;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(144,13,13, 0.9)), to(rgba(207,27,27, 0.75)));
+    background-image: linear-gradient(to bottom, rgba(144,13,13, 0.959), rgba(207,27,27, 0.75));
+}
+
 #answer_text {
     position: absolute;
     top: 205px;
@@ -180,33 +188,54 @@ body {
     color: azure;
     font-family: "Caveat Brush";
     font-size:29px;
+    text-align: center;
+    width: 400px;
 }
 
 #answer_text2 {
     position: absolute;
     top: 340px;
-    left: 1543px;
+    left: 1446px;
     color: azure;
     font-family: "Caveat Brush";
     font-size:29px;
+    text-align: center;
+    width: 400px;
 }
 
 #answer_user1 {
     position: absolute;
-    top: 272px;
-    left: 1446px;
+    top: 279px;
+    left: 1411px;
     color: azure;
     font-family: "Caveat Brush";
-    font-size:22px;
+    font-size:26px;
+    text-align: center;
+    width: 470px;
+
 }
 
 #answer_user2 {
     position: absolute;
-    top: 403px;
-    left: 1626px;
+    top: 428px;
+    left: 1594px;
+    color: rgba(0, 0, 0, 1);
+    background-color: azure;
+    font-size:29px;
+    text-align: center;
+    width: 100px;
+    border-radius: 3px;
+}
+
+#answer_user3 {
+    position: absolute;
+    top: 412px;
+    left: 1411px;
     color: azure;
     font-family: "Caveat Brush";
-    font-size:29px;
+    font-size:26px;
+    text-align: center;
+    width: 470px;
 }
 
 #tree {
@@ -230,16 +259,18 @@ body {
 }
 
 #tree1 { position: absolute; top: 339px; left: 111px; z-index: -2; }
-#tree2 { position: absolute; top: 148px; left: 387px; z-index: -2; }
-#tree3 { position: absolute; top: 339px; left: 387px; z-index: -2; }
-#tree4 { position: absolute; top: 530px; left: 387px; z-index: -2; }
-#tree5 { position: absolute; top: 101px; left: 642px; z-index: -2; }
-#tree6 { position: absolute; top: 196px; left: 642px; z-index: -2; }
-#tree7 { position: absolute; top: 291px; left: 642px; z-index: -2; }
-#tree8 { position: absolute; top: 387px; left: 642px; z-index: -2; }
-#tree9 { position: absolute; top: 482px; left: 642px; z-index: -2; }
-#tree10 { position: absolute; top: 577px; left: 642px; z-index: -2; }
-#tree11 { position: absolute; top: 101px; left:	897px; z-index: -2; }
+#tree2 { position: absolute; top: 148px; left: 458px; z-index: -2; }
+#tree3 { position: absolute; top: 339px; left: 458px; z-index: -2; }
+#tree4 { position: absolute; top: 530px; left: 458px; z-index: -2; }
+#tree5 { position: absolute; top: 101px; left: 805px; z-index: -2; }
+#tree6 { position: absolute; top: 196px; left: 805px; z-index: -2; }
+#tree7 { position: absolute; top: 291px; left: 805px; z-index: -2; }
+#tree8 { position: absolute; top: 387px; left: 805px; z-index: -2; }
+#tree9 { position: absolute; top: 482px; left: 805px; z-index: -2; }
+#tree10 { position: absolute; top: 577px; left: 805px; z-index: -2; }
+#tree11 { position: absolute; top: 339px; left:	1152px; z-index: -2; }
+/*#tree11 { position: absolute; top: 101px; left:	897px; z-index: -2; }*/
+
 #tree12 { position: absolute; top: 196px; left:	897px; z-index: -2; }
 #tree13 { position: absolute; top: 291px; left:	897px; z-index: -2; }
 #tree14 { position: absolute; top: 387px; left:	897px; z-index: -2; }
@@ -287,17 +318,11 @@ input[type=number] {
 #tree_memory4-9 { position: absolute; top: 503px; left: 642px; z-index: -2; }
 #tree_memory4-10 { position: absolute; top: 632px; left: 642px; z-index: -2; }
 #tree_memory5-11 { position: absolute; top: 761px; left: 642px; z-index: -2; }
-#tree_memory6-12 { position: absolute; top: 117px; left:	897px; z-index: -2; }
-#tree_memory7-13 { position: absolute; top: 246px; left:	897px; z-index: -2; }
-#tree_memory8-14 { position: absolute; top: 375px; left:	897px; z-index: -2; }
-#tree_memory9-15 { position: absolute; top: 503px; left:	897px; z-index: -2; }
-#tree_memory10-16 { position: absolute; top: 632px; left:	897px; z-index: -2; }
-#tree_memory11-17 { position: absolute; top: 761px; left:	897px; z-index: -2; }
-#tree_memory12-17 { position: absolute; top: 439px; left:	1152px; z-index: -2; }
-#tree_memory13-17 { position: absolute; top: 439px; left:	1152px; z-index: -2; }
-#tree_memory14-17 { position: absolute; top: 439px; left:	1152px; z-index: -2; }
-#tree_memory15-17 { position: absolute; top: 439px; left:	1152px; z-index: -2; }
-#tree_memory16-17 { position: absolute; top: 439px; left:	1152px; z-index: -2; }
+#tree_memory6-11 { position: absolute; top: 117px; left:	897px; z-index: -2; }
+#tree_memory7-11 { position: absolute; top: 246px; left:	897px; z-index: -2; }
+#tree_memory8-11 { position: absolute; top: 375px; left:	897px; z-index: -2; }
+#tree_memory9-11 { position: absolute; top: 503px; left:	897px; z-index: -2; }
+#tree_memory10-11 { position: absolute; top: 632px; left:	897px; z-index: -2; }
 
 .sum_paths {
     color: azure;

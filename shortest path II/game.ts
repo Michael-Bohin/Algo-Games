@@ -20,18 +20,17 @@ class Game {
     public graph: Map<number, number[]> = new Map<number,number[]>([
         [1, [2, 3, 4]],
         [2, [5, 6]], [3, [7, 8]], [4, [9, 10]],
-        [5, [11]], [6, [12]], [7, [13]], [8, [14]], [9, [15]], [10, [16]],
-        [11, [17]], [12, [17]], [13, [17]], [14, [17]], [15, [17]], [16, [17]]
+        [5, [11]], [6, [11]], [7, [11]], [8, [11]], [9, [11]], [10, [11]]
     ]); 
 
     public paths: number[][] = [
         [-9],   // dummy 
-        [1, 2, 5, 11, 17],
-        [1, 2, 6, 12, 17],
-        [1, 3, 7, 13, 17],
-        [1, 3, 8, 14, 17],
-        [1, 4, 9, 15, 17],
-        [1, 4, 10, 16, 17]
+        [1, 2, 5, 11],
+        [1, 2, 6, 11],
+        [1, 3, 7, 11],
+        [1, 3, 8, 11],
+        [1, 4, 9, 11],
+        [1, 4, 10, 11]
     ]
 
     public start: string;
@@ -74,16 +73,18 @@ class Game {
             arr[i] = temp;
         }
 
-        for(let i: number = 0; i < arr.length; ++ i) {
+        for(let i: number = 0; i < arr.length; ++ i) 
             if(arr[i] == this.start) { // swap with element at index 1
                 arr[i] = arr[1];
                 arr[1] = this.start;
             }
+        
+        for(let i: number = 0; i < arr.length; ++ i) 
             if(arr[i] == this.goal) { // swap with element at index 1
-                arr[i] = arr[17];
-                arr[17] = this.goal;
+                arr[i] = arr[11];
+                arr[11] = this.goal;
             }
-        }
+        
 
         for(let i: number = 0; i < arr.length; ++ i) {
             ret[i] = arr[i];
@@ -97,7 +98,7 @@ class Game {
         for(let i: number = 0; i < 7; ++i) { ret[i] = new Array(3); }
 
         for(let i: number = 1; i < 7; ++i) { /* value inits from undefined >>> */ ret[i][0] = ""; ret[i][1] = ""; int_sum[i] = 0;
-            for(let j: number = 0; j < 5; ++j) {
+            for(let j: number = 0; j < 4; ++j) {
                 if(j != 0) {
                     ret[i][0] += " + ";
                     let [fx, fy] = game.cities.get(game.flight_cities[game.paths[i][j-1]]), [tx, ty] = game.cities.get(game.flight_cities[game.paths[i][j]]);

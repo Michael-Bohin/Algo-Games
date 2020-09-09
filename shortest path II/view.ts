@@ -1,9 +1,12 @@
 class View {
     game: Game;
     toggle_view_map: boolean = true;
-    path: number = 0 // 0 => at redraw display all edges in standard mode without weight, for 1 - 6 display paths in green with weight 
-    hover: number = 0 // 0 => at redraw display no hover, for hovers 5 - 16 inclusive display its edges highlighted with weight -> draw it on second higher canvas  
-
+    path: number = 1; // 0 => at redraw display all edges in standard mode without weight, for 1 - 6 display paths in green with weight 
+    hover: number = 0; // 0 => at redraw display no hover, for hovers 5 - 16 inclusive display its edges highlighted with weight -> draw it on second higher canvas  
+    phase: number = 1;
+    answers: number[] = new Array(7).fill(-9);
+    final_answer: number = 0;
+    
     constructor(game: Game) {
         this.game = game;
         document.getElementById('text2').innerHTML = `You have now been for a week in ${game.start}. And decided that your next destination will be ${game.goal}.`;
@@ -11,6 +14,8 @@ class View {
         document.querySelectorAll(".ml3").forEach(function(userItem) {userItem.innerHTML = userItem.textContent.replace(/\S/g, "<span class='letter'>$&</span>");});
         anime.timeline({loop: false}).add({targets: '.ml3 .letter', opacity: [0,1], easing: "easeInOutQuad", duration: 600, delay: (el:HTMLElement, i:number) => 30 * (i+1)});
         document.getElementById("letsplay").addEventListener("mousedown", _ => this.start_playing(game));
+        document.addEventListener("mousedown", ev => { console.log(`${ev.x} ${ev.y}`);});
+        this.path = 1;
     }
 
     start_playing(game: Game): void {
@@ -36,20 +41,14 @@ class View {
             temp = temp + `<img id="${key}_name" src="./cities/${key}.png" style="position: absolute; left: ${x+65-11-51+11}px; top: ${83-11-19+y}px; z-index: 5000;">`;
         }
 
-        for(let i: number = 1; i <= 17; ++i) {
+        for(let i: number = 1; i <= 11; ++i) {
             temp = temp + `<p id="tree${i}" class="tree_city">${game.flight_cities[i]}</p>`;
-        }
-
-        for (let [from, to] of game.graph.entries()) {
-            for(let toX of to) {
-                temp = temp + `<input type="number" id="tree_memory${from}-${toX}" class="tree_memory" min="0" max="1000" value="" placeholder="?" step="1">`;
-            }
         }
 
         temp = temp + `<p id="shared_text">Sum of paths: </p> <p id="set_ans">Set answer</p>`;
         let a = game.flight_cities; let b = game.paths; 
         for(let i: number = 1; i < 7; ++i) {
-            temp = temp + `<p class="sum_paths" id="path${i}">${a[b[i][0]]} &#10132 ${a[b[i][1]]} &#10132; ${a[b[i][2]]} &#10132; ${a[b[i][3]]} &#10132; ${a[b[i][4]]} = <input type="number" id="sum${i}" class="sum_input" min="0" max="1000" value="" placeholder="?" step="1"> </p> `;
+            temp = temp + `<p class="sum_paths" id="path${i}">${a[b[i][0]]} &#10132 ${a[b[i][1]]} &#10132; ${a[b[i][2]]} &#10132; ${a[b[i][3]]} = </p> `;
         }
         temp = temp + `
             <input type="checkbox" id="answer1" class="answer_checkbox" value="" name="check"/>
@@ -62,6 +61,7 @@ class View {
         document.body.innerHTML = temp;
 
         /*>>>>>>>>>>>>>>>>>  Event listeners init   <<<<<<<<<<<<<<<<<<<<<<<<<< */
+        document.getElementById("btn3").addEventListener("mousedown", ev => {this.check_answer()});
         for(let key of map.keys()) {
             // for each city on the graph of flights add eventlistener for hover and for clearing that canvas. 
             let el:HTMLElement = document.getElementById(key);
@@ -78,7 +78,7 @@ class View {
             } );
         }
 
-        document.addEventListener("mousedown", ev => { 
+        document.addEventListener("mouseup", ev => { 
             let city = this.clicked_onto_star(ev.x, ev.y);
             if(city != "false") {
                 let key_num: number = this.index_in_perm(city);
@@ -88,81 +88,97 @@ class View {
                 } else {
                     this.path = 0;
                 }
-            } else {
-                if(this.path != 0) {
-                    this.path = 0;
-                }
             }
             this.redraw();
         } );
 
-        document.addEventListener("keyup", this.update_answer_sum );
-        document.getElementById("btn1").addEventListener("mousedown", ev => { this.toggle_view(true); });
-        document.getElementById("btn2").addEventListener("mousedown", ev => { this.toggle_view(false); });
-        document.getElementById("btn3").addEventListener("mousedown", ev => {
-            let path: number;
-            let sum: number = -9;
-            for(let i: number = 1; i < 7; ++i) {
-                let el: HTMLInputElement = <HTMLInputElement>(document.getElementById(`answer${i}`));
-                if(el.checked) {
-                    let box: HTMLInputElement = <HTMLInputElement>(document.getElementById(`sum${i}`));
-                    let answer: string = box.value;
-                    sum = parseInt(answer);
-                    path = i;
-                }
-            }
-            if (typeof(path) == 'undefined') {
-                // do nothing user didnt pick any checkbox at this point in time 
-            } else {
-                console.log(`path: ${path}, sum: ${sum}`);
-                this.evaluate_answer(path, sum);
-            }
-        });
-
         document.addEventListener("keydown", ev => {
-            if(ev.key == "s" || ev.key == "S") {
-                this.toggle_view(true);
-            } else if(ev.key == "f" || ev.key == "F") {
-                this.toggle_view(false);
-            }  else if(ev.key == "0" || ev.key == "1" || ev.key == "2" || ev.key == "3" || ev.key == "4" || ev.key == "5" || ev.key == "6") {
-                this.path = parseInt(ev.key); this.redraw();
+            if(ev.key == "0" || ev.key == "1" || ev.key == "2" || ev.key == "3" || ev.key == "4" || ev.key == "5" || ev.key == "6") {
+                if( !(document.activeElement === document.getElementById('answer_user2')) ) {
+                    this.path = parseInt(ev.key); 
+                    this.redraw();
+                }
+            } else if (ev.key == "Enter") {
+                console.log("pressed enter");
+                this.check_answer();
             } else {
                 console.log(ev.key);
             }
         });
 
         for(let i: number = 1; i < 7; ++i) {
-            document.getElementById(`answer${i}`).addEventListener("mousedown", ev => { this.update_answer_path(i); });
+            document.getElementById(`answer${i}`).addEventListener("mousedown", ev => { this.correct_checkbox(i); });
         }
 
         this.redraw();
     }
 
-    update_answer_sum(): void {
-        if(game.game_over)
-            return;
-        for(let i: number = 1; i < 7; ++i) {
-            let el: HTMLInputElement = <HTMLInputElement>(document.getElementById(`answer${i}`));
+    correct_checkbox(i: number): void {
+        this.final_answer = i;
+        for(let j: number = 1; j < 7; ++j) {
+            let el: HTMLInputElement = <HTMLInputElement>(document.getElementById(`answer${j}`));
             if(el.checked) {
-                let box: HTMLInputElement = <HTMLInputElement>(document.getElementById(`sum${i}`));
-                let answer: string = box.value;
-                document.getElementById("answer_user2").innerHTML = `${answer}`;
+                if(i != j) {
+                    el.checked = false;
+                } else {
+                    el.checked = true;
+                }
+            }     
+        }
+    }
+
+    check_answer(): void {
+        let path: number = -9;
+        if(this.phase != 7) {
+            let sum: number = -9;
+            let box: HTMLInputElement = <HTMLInputElement>(document.getElementById("answer_user2"));
+            let answer: string = box.value;
+            sum = parseInt(answer);
+            console.log("user answer: " + sum);
+            let dist: number = this.current_distance()
+            if(dist == sum) {
+                console.log("user answer correct");
+                this.answers[this.phase] = dist;
+                this.phase += 1;
+                this.path += 1;
+                (<HTMLInputElement>(document.getElementById("answer_user2"))).value = "";
+                this.redraw();
+            } else {
+                console.log("user is fail, correct is: " + dist);
+                this.animate_fail();
+            }
+        } else {
+            this.toggle_view(false);
+            this.redraw();
+            if(this.final_answer != 0) {
+                this.evaluate_answer(this.final_answer, this.answers[this.final_answer]);
             }
         }
     }
 
-    update_answer_path(i: number): void {
-        for(let j: number = 1; j < 7; ++j)
-            if(i != j) {
-                let el: HTMLInputElement = <HTMLInputElement> document.getElementById(`answer${j}`);
-                el.checked = false;
-            }
-        let a = game.flight_cities; let b = game.paths; 
-        document.getElementById("answer_user1").innerHTML = `${a[b[i][0]]} &#10132 ${a[b[i][1]]} &#10132; ${a[b[i][2]]} &#10132; ${a[b[i][3]]} &#10132; ${a[b[i][4]]}`;
-        
-        let box: HTMLInputElement = <HTMLInputElement>(document.getElementById(`sum${i}`));
-        let answer: string = box.value;
-        document.getElementById("answer_user2").innerHTML = `${answer}`;
+    animate_fail(): void {
+        let el: HTMLElement = document.getElementById("btn3");
+        let fail_emotions: string[] = ["🤨", "😬", "🙄", "😒", "🤯", "🙈"];
+        el.innerHTML = fail_emotions[game.randint(0,5)] + fail_emotions[game.randint(0,5)];
+        el.id = "btn3_fail";
+        setTimeout(this.animate_reverse, 1500);
+    }
+
+    animate_reverse(): void {
+        let el: HTMLElement = document.getElementById("btn3_fail");
+        el.id = "btn3";
+        el.innerHTML = "Check answer";
+    }
+
+    current_distance(): number {
+        let total_dist: number = 0;
+        for(let i: number = 0; i < 3; ++i) {
+            let [fx, fy]: [number, number] = game.cities.get(game.flight_cities[(game.paths[this.phase][i])]), [tx, ty]: [number, number] = game.cities.get(game.flight_cities[(game.paths[this.phase][i+1])]);
+            let dist: number = Math.sqrt((fx - tx) ** 2 + (fy - ty) ** 2);
+            dist = Math.round(dist / 10);
+            total_dist += dist;
+        }
+        return total_dist;
     }
 
     toggle_view(satelite_map: boolean) {
@@ -186,13 +202,8 @@ class View {
             document.getElementById(key).style.zIndex = `${stars}`;
             document.getElementById(`${key}_name`).style.zIndex = `${names}`;
         }
-        for(let i: number = 1; i <= 17; ++i) {
+        for(let i: number = 1; i <= 11; ++i) {
             document.getElementById(`tree${i}`).style.zIndex = `${tree_names}`;
-        }
-        for (let [from, to] of game.graph.entries()) {
-            for(let toX of to) {
-                document.getElementById(`tree_memory${from}-${toX}`).style.zIndex = `${tree_memory}`;
-            }
         }
         for(let i:number = 1; i < 7; ++i) {
             document.getElementById(`path${i}`).style.zIndex = `${tree_memory}`;
@@ -256,6 +267,14 @@ class View {
 
         for (let key of game.cities.keys()) 
             (<HTMLImageElement>(document.getElementById(key))).src = "./star.png"; 
+        
+        if(this.phase != 7) {
+            let temp: string = game.flight_cities[game.paths[this.phase][0]];
+            for(let i: number = 1; i < 4; ++i) {
+                temp += ` ⟹ ${game.flight_cities[game.paths[this.phase][i]]}`;
+            }
+            document.getElementById("answer_user1").innerHTML = temp;
+        }
 
         if(this.toggle_view_map) {
             this.draw_paths(cx);
@@ -270,7 +289,7 @@ class View {
                 let [fx, fy] = game.cities.get(game.flight_cities[from]), [tx, ty] = game.cities.get(game.flight_cities[toX]);
                 cx.beginPath();
                 cx.lineWidth = 2;
-                let fx_tree: number = document.getElementById(`tree${from}`).offsetLeft + 120 - 65; // lol # 0 equality, 0 is a number too 
+                let fx_tree: number = document.getElementById(`tree${from}`).offsetLeft + 120 - 65; 
                 let fy_tree: number = document.getElementById(`tree${from}`).offsetTop + 15 - 83;
                 let tx_tree: number = document.getElementById(`tree${toX}`).offsetLeft + 0 - 65;
                 let ty_tree: number = document.getElementById(`tree${toX}`).offsetTop + 15 - 83;                 
@@ -279,15 +298,11 @@ class View {
                 cx.strokeStyle = 'rgba(0, 255, 0, 1)';
                 cx.stroke();
 
+                /* stroke edge doesnt work in this case */
                 let dist = Math.sqrt((fx - tx) ** 2 + (fy - ty) ** 2);
                 dist = Math.round(dist / 10);
                 let [mid_x, mid_y] = [(fx_tree + tx_tree) / 2, (fy_tree + ty_tree) / 2];
-                /* >>>>> modify position of box that is over it */ 
-                let el: HTMLElement = document.getElementById(`tree_memory${from}-${toX}`);
-                el.style.top = `${mid_y -20 + 83}px`;
-                el.style.left = `${mid_x -20 + 65}px`;
-                
-                /*cx.beginPath();
+                cx.beginPath();
                 cx.arc(mid_x, mid_y, 23, 0, 2 * Math.PI);
                 cx.fillStyle = 'rgba(20, 20, 20,1)'; 
                 cx.fill();                                      // fill background of circle
@@ -297,7 +312,24 @@ class View {
                 cx.strokeStyle = 'rgba(0, 255, 0, 1)';  // 'rgba(255, 202, 24, 0.9)';
                 cx.fillText(dist.toString(), mid_x, mid_y);
                 cx.lineWidth = 1;
-                cx.strokeText(dist.toString(), mid_x, mid_y);*/  // print distance onto circle 
+                cx.strokeText(dist.toString(), mid_x, mid_y);  // print distance onto circle 
+            }
+        }
+        let a = game.flight_cities; let b = game.paths; 
+        for(let i: number = 1; i < 7; ++i) {
+            let el: HTMLElement = document.getElementById(`path${i}`);
+            el.innerHTML = `${a[b[i][0]]} &#10132 ${a[b[i][1]]} &#10132; ${a[b[i][2]]} &#10132; ${a[b[i][3]]} = ${this.answers[i]}`;
+        }
+        document.getElementById("answer_text").innerHTML = "The shortest combination of flights is:";
+        document.getElementById("answer_text2").innerHTML = "with total distance:";
+        document.getElementById("answer_user1").innerHTML = "";
+        document.getElementById("answer_user2").style.zIndex = "-9999";
+
+        for(let i: number = 1; i < 7; ++i) {
+            let el: HTMLInputElement = <HTMLInputElement>(document.getElementById(`answer${i}`));
+            if(this.final_answer == i)  {
+                document.getElementById("answer_user1").innerHTML = `${a[b[i][0]]} &#10132 ${a[b[i][1]]} &#10132; ${a[b[i][2]]} &#10132; ${a[b[i][3]]}`;
+                document.getElementById("answer_user3").innerHTML = `${this.answers[i]}`;
             }
         }
     }
@@ -338,7 +370,8 @@ class View {
     }
 
     draw_path(path: number, cx: CanvasRenderingContext2D): void {
-        for(let i: number = 0; i < 4; ++i) {
+        if(path == 7) path = 6;
+        for(let i: number = 0; i < 3; ++i) {
             let from: string = game.flight_cities[game.paths[path][i]];
             let to: string = game.flight_cities[game.paths[path][i+1]];
             this.stroke_edge(cx, game.cities.get(from), game.cities.get(to), 'rgba(0, 255, 0, 1)', true);
@@ -350,7 +383,7 @@ class View {
     draw_all(cx: CanvasRenderingContext2D) {        
         for (let [from, to] of game.graph.entries()) {
             for(let toX of to) {
-                this.stroke_edge(cx, game.cities.get(game.flight_cities[from]), game.cities.get(game.flight_cities[toX]), 'rgba(155, 223, 244, 0.9)', false);
+                this.stroke_edge(cx, game.cities.get(game.flight_cities[from]), game.cities.get(game.flight_cities[toX]), 'rgba(155, 223, 244, 0.9)',false);
             }
         }
     }
@@ -397,8 +430,7 @@ class View {
                 <table style="width:100%;"><td style="text-align: center; width:120px;">${split_path[0]}</td>
                 <td style="text-align: center; width:120px;">${split_path[1]}</td>
                 <td style="text-align: center; width:120px;">${split_path[2]}</td>
-                <td style="text-align: center; width:120px;">${split_path[3]}</td>
-                <td style="text-align: center; width:120px;">${split_path[4]}</td></table>`;
+                <td style="text-align: center; width:120px;">${split_path[3]}</td></table>`;
             
             document.getElementById(`calc${i}`).innerHTML = `${ret[i][1]}`;
             document.getElementById(`res${i}`).innerHTML = `${ret[i][2]}`;
@@ -407,7 +439,7 @@ class View {
         }
 
         let row: number = game.players_path_order;
-        let rows: number[] = [/*dummy*/-9, 207,252,300,340,383,426];
+        let rows: number[] = [/*dummy*/-9, 200,239,277,313,350,388];
         document.getElementById("highlight_users_path").style.top = `${rows[row]}px`;
 
         let audio = new Audio('./loss.mp3');
