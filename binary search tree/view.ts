@@ -1,26 +1,37 @@
 class view_html {
-    bst: BST<unknown>;
+    bst: BST;
     players_order_of_cards: number[] = new Array(31).fill(-9);          // there are 31 cards on board 
     choices_made: number = 0;                                           // number of cards player has turned face up 
     cards_face_up: boolean[] = new Array(32).fill(false);               // including dummy 
     public level2: boolean = false;
     public operation: string;
+    game_ints: boolean = false;
 
-    constructor(bst: BST<unknown>) {
+    string_initial_elements: string[] = [
+        "add", "allow", "appear", "ask", "be", "become", "begin", "believe", "bring", "build", "buy", "call", 
+        "change", "come", "consider", "continue", "create", "cut", "decide", "die", "do", "expect", "fall", 
+        "feel", "find", "focus", "follow", "get", "give", "go", "grow", "happen", "have", "hear", "help", 
+        "hold", "include", "keep", "kill", "know", "lead", "learn", "leave", "let", "like", "live", "look", 
+        "lose", "love", "make", "mean", "meet", "move", "need", "offer", "open", "pass", "pay", "play", "provide",
+        "pull", "put", "reach", "read", "remain", "remember", "report", "require", "run", "say", "see", "seem", 
+        "sell", "send", "serve", "set", "show", "sit", "speak", "spend", "stand", "start", "stay", "stop", 
+        "suggest", "take", "talk", "tell", "think", "try", "turn", "understand", "use", "wait", "walk", "want", 
+        "watch", "win", "work", "write"
+    ];
+
+    constructor(bst: BST, game_ints: boolean) {
+        this.game_ints = game_ints; this.bst = bst; 
         function toggleZoomScreen(scale_percent: number) {
             document.body.style.zoom = `${scale_percent}%`;
         }
         let browser_width: number = window.innerWidth;
         let percentage_change: number = (browser_width / 1920) * 100;
-        console.log(browser_width);
-        console.log(window.innerHeight);
-        console.log(percentage_change);
         toggleZoomScreen(percentage_change);
-        console.log(`width after change: ${window.innerWidth}`);
-        console.log(`height after change: ${window.innerHeight}`);
+        let v: string = this.string_initial_elements[parseInt(bst.question)];
+        if(game_ints)
+            v = `${bst.question}`;
 
-        this.bst = bst; 
-        document.querySelector('body').innerHTML = this.page_game + `<div id='answer_yes' class="button ice green">${bst.question} is in the tree!</div><div id='answer_no' class="button ice green">${bst.question} is not in the tree!</div>`;
+        document.querySelector('body').innerHTML = this.page_game + `<div id='answer_yes' class="button ice green">${v} is in the tree!</div><div id='answer_no' class="button ice green">${v} is not in the tree!</div>`;
  
         for(let i: number = 1; i < 32; i++) 
             document.querySelector('body').innerHTML  += `<img id="node${i}" src="cardfacedown.png">`;
@@ -37,11 +48,9 @@ class view_html {
         modify.innerHTML = s;
 
         let text = document.getElementById('q');
-        if(bst.game_type_int) {
+        text.innerHTML = `Is verb '${v}' in the binary search tree?`;
+        if(game_ints)
             text.innerHTML = `Is number ${bst.question} in the binary search tree?`;
-        } else {
-            text.innerHTML = `Is verb '${bst.question}' in the binary search tree?`;
-        }
 
         let modify_id = document.getElementById('answer_yes');
         modify_id.addEventListener("click", ((event: CustomEvent) => {
@@ -53,7 +62,7 @@ class view_html {
             this.answer(false);
         }) as EventListener);
 
-        if(bst.game_type_int) {
+        if(game_ints) {
             document.getElementById("answer_no").style.width = "300px";
             let el: HTMLElement = document.getElementById("answer_yes");
             el.style.width = "300px"; el.style.left = "517px";
@@ -120,7 +129,7 @@ class view_html {
             node.style.top = `${this.cards_height[i]}px`;
             node.style.left = `${this.cards_width[i]}px`;
             document.querySelector('body').appendChild(node);
-            if(this.bst.game_type_int) {
+            if(this.game_ints) {
                 this.draw_numbers(i);
             } else {
                 this.draw_verbs(i);
@@ -129,7 +138,7 @@ class view_html {
     }
 
     draw_numbers(i: number): void {
-        let draw_number: number = this.bst.ascending_members[this.bst.order[i]-1];
+        let draw_number: number = <number>this.bst.ascending_members[this.bst.order[i]-1];
         console.log(draw_number);
         let Top: number = this.cards_height[i] + 34;
         if(this.level2) {
@@ -192,14 +201,19 @@ class view_html {
     }
 
     draw_verbs(i: number): void {
-        let verb: string = this.bst.ascending_members_string[this.bst.order[i]-1];
+        let verb: string = this.string_initial_elements[this.bst.ascending_members[this.bst.order[i]-1]];
         console.log(verb);
-        let node = document.createElement('img');
-        node.src = `./verbs/${verb}.png`;
-        node.style.position = 'absolute';
-        node.style.zIndex = '3';
-        node.style.top = `${this.cards_height[i] + 51}px`;
+        let node = document.createElement('p');
+        node.className = "p_lesson";
+        if(verb.length == 7)
+            node.style.fontSize = "30px";
+        if(verb.length == 8)
+            node.style.fontSize = "24px";
+        if(verb.length > 8)
+            node.style.fontSize = "20px";
+        node.style.top = `${this.cards_height[i]}px`;
         node.style.left = `${this.cards_width[i]}px`;
+        node.innerHTML = verb;
         document.querySelector('body').appendChild(node);
     }
 
@@ -228,15 +242,17 @@ class view_html {
     ];
 }
 /* ------------- run: ------------ */
+
+
+
 function init(game_type: boolean, level2:string) {
-    let bst: BST<unknown> = new BST(game_type);
-    let view: view_html = new view_html(bst);
+    let bst: BST = new BST();
+    let view: view_html = new view_html(bst, game_type);
     if(level2 != "") {
         view.level2 = true;
         view.operation = level2;
     }
 }
-
 document.getElementById("integers").addEventListener("mousedown", ev => { init(true, ""); });
 document.getElementById("verbs").addEventListener("mousedown", ev => { init(false, ""); });
 document.getElementById("level2").addEventListener("mousedown", ev => {
@@ -247,7 +263,7 @@ document.getElementById("level2").addEventListener("mousedown", ev => {
     removeElement("integers");
     removeElement("verbs");
     removeElement("level2");
-    document.body.innerHTML += `<div id="addi" class="button ice green">Addition</div><div id="subs" class="button ice green">Substraction</div>`;
+    document.body.innerHTML += `<div id="addi" class="button ice green">Addition</div><div id="subs" class="button ice green">Subtraction</div>`;
     document.getElementById("addi").addEventListener("mousedown", ev => { init(true, "add"); });
     document.getElementById("subs").addEventListener("mousedown", ev => { init(true, "sub"); });
 });

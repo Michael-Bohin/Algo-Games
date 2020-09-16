@@ -7,6 +7,20 @@ body {
     background-size: cover;
 }
 
+.p_lesson {
+    position: absolute;
+    width: 96px;
+    height: 126px;
+    line-height: 126px;
+    text-align: center;
+    font-family: "Caveat Brush";
+    color: rgba(15, 87, 184, 1);
+    font-size: 32px;
+    z-index: 3;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
 #return {
     position: absolute;
     top: 50px;
@@ -29,15 +43,6 @@ body {
 }
 
 #answer_no {
-    /*background-color:#f44336;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    border-radius: 15px;*/
     position: absolute;
     top: 99px;
     left: 1087px;
@@ -57,15 +62,6 @@ body {
 }
 
 #answer_yes {
-   /* background-color: #4CAF50;  Green 
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    border-radius: 15px;*/
     position: absolute;
     top: 99px;
     left: 487px;

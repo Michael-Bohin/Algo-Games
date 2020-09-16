@@ -1,3 +1,4 @@
+/// <reference path="animejs/index.d.ts" />
 class View {
     game: Game;
     toggle_view_map: boolean = true;
