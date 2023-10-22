@@ -22,7 +22,7 @@ class view_html {
     constructor(bst: BST, game_ints: boolean) {
         this.game_ints = game_ints; this.bst = bst; 
         function toggleZoomScreen(scale_percent: number) {
-            document.body.style.zoom = `${scale_percent}%`;
+            document.body.style.transform = `scale(0.${scale_percent})`;
         }
         let browser_width: number = window.innerWidth;
         let percentage_change: number = (browser_width / 1920) * 100;

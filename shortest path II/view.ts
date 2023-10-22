@@ -250,7 +250,7 @@ class View {
         if(game.game_over) 
             return;
         function toggleZoomScreen(scale_percent: number) {
-            document.body.style.zoom = `${scale_percent}%`;
+            document.body.style.transform = `scale(0.${scale_percent})`;
         }
         let browser_width: number = window.innerWidth;
         let percentage_change: number = (browser_width / 1920) * 100;
